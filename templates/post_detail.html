@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<article class="blog-post">
-    <h1 class="blog-post-title">{{ object.title }}</h1>
-    <p class="blog-post-meta">{{ object.created_at|date:"F d, Y" }} by {{ object.author }}</p>
+<article>
+    <header class="post-detail-header">
+        <h1>{{ object.title }}</h1>
+        <div class="post-meta">{{ object.created_at|date:"F d, Y" }} — {{ object.author }}</div>
+    </header>
 
-    <p>{{ object.content }}</p>
+    <div class="post-content">
+        {{ object.content|linebreaks }}
+    </div>
 
     {% if user == object.author %}
-    <div class="mt-4">
-        <a href="{% url 'post_edit' object.pk %}" class="btn btn-secondary btn-sm">Edit</a>
-        <a href="{% url 'post_delete' object.pk %}" class="btn btn-danger btn-sm">Delete</a>
+    <div style="margin-top: 3rem;">
+        <a href="{% url 'post_edit' object.pk %}" class="btn">Edit</a>
+        <a href="{% url 'post_delete' object.pk %}" class="btn"
+            style="background-color: transparent; color: var(--accent-color); border: 2px solid var(--accent-color);">Delete</a>
     </div>
     {% endif %}
 </article>
